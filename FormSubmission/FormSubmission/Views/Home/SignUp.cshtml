@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "SignUp";
+}
+
+@{
+    bool CheckGender(string gn) {
+        if(Model != null && Model.Gender !=null && Model.Gender.Equals(gn))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool CheckProfession(string prof) {
+        if (Model != null && Model.Profession != null && Model.Profession.Equals(prof))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool DateOfBirth(string dob)
+    {
+        if (Model != null && Model.Date != null) {
+            foreach (var h in Model.Date) {
+                if (h.Equals(dob)) return true;
+            }
+        }
+        return false;
+    }
+
+}
+
+
+
+<h2>SignUp</h2>
+@*@Html.ValidationSummary()*@
+<form method="post">
+    <input type="text" name="Name" class="form-control" value="@(Model != null ? Model.Name :"" )" placeholder="Name" />
+    <span class="text-danger">@Html.ValidationMessage("Name")</span><br />
+    <input type="text" name="Username" value="@(Model != null ? Model.Username : "" )" class="form-control" placeholder="Username" />
+    @Html.ValidationMessage("Username")
+    <br>Gender: <input type="radio" checked="@CheckGender("Male")"  name="Gender" value="Male" /> Male
+    <input type="radio" name="Gender" checked="@CheckGender("Female")" value="Female" /> Female </br>
+    @Html.ValidationMessage("Gender")
+    <br />Profession:
+    <select class="form-control" name="Profession">
+        <option disabled selected>---Select---</option>
+        <option selected="@CheckProfession("Teacher")">Teacher</option>
+        <option selected="@CheckProfession("Student")">Student</option>
+        <option selected="@CheckProfession("Business")">Business</option>
+    </select>
+    @Html.ValidationMessage("Profession")
+    <br />
+   
+    Dob: <input type="date" name="Dob" value="@(Model != null ? Model.Dob.Date.ToString("yyyy-MM-dd") : "")"/>
+    <br />
+    @Html.ValidationMessage("Dob") <br />
+    <input type="submit" class="btn btn-success" />
+</form>
+
